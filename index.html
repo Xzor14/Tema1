@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan - Andi & Siti</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+            background: #f5f5dc;
+        }
+
+        .cover {
+            height: 100vh;
+            background: linear-gradient(135deg, #0a4d3c 0%, #1a7a5e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '☪';
+            position: absolute;
+            font-size: 300px;
+            opacity: 0.05;
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .islamic-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,215,0,0.03) 35px, rgba(255,215,0,0.03) 70px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255,215,0,0.03) 35px, rgba(255,215,0,0.03) 70px);
+        }
+
+        .cover-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bismillah {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+            color: #ffd700;
+        }
+
+        .cover h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+
+        .cover p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .open-btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background: #ffd700;
+            color: #0a4d3c;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            font-weight: bold;
+        }
+
+        .open-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,215,0,0.5);
+            background: #ffed4e;
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            background: #0a4d3c;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            background: #1a7a5e;
+        }
+
+        .music-control.playing {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .content {
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 80px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0a4d3c 0%, #1a7a5e 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,215,0,0.05) 35px, rgba(255,215,0,0.05) 70px);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeIn 1.5s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            color: #ffd700;
+        }
+
+        .couple-names {
+            font-size: 5rem;
+            font-weight: bold;
+            margin: 2rem 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: #ffd700;
+        }
+
+        .date {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            opacity: 0.95;
+        }
+
+        .ornament {
+            font-size: 3rem;
+            margin: 20px 0;
+            color: #ffd700;
+        }
+
+        .bride-groom {
+            background: #f5f5dc;
+            padding: 80px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #0a4d3c;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '☪';
+            display: block;
+            font-size: 2rem;
+            color: #ffd700;
+            margin: 20px auto 0;
+        }
+
+        .couple-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .couple-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(10,77,60,0.2);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid #ffd700;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .couple-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,215,0,0.03) 10px,
+                rgba(255,215,0,0.03) 20px
+            );
+            animation: movePattern 20s linear infinite;
+        }
+
+        @keyframes movePattern {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .couple-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(10,77,60,0.3);
+        }
+
+        .couple-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #0a4d3c 0%, #1a7a5e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #ffd700;
+            border: 5px solid #ffd700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .couple-card h3 {
+            font-size: 2rem;
+            color: #0a4d3c;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .couple-card p {
+            color: #555;
+            line-height: 1.8;
+            margin: 10px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .event-details {
+            background: linear-gradient(135deg, #0a4d3c 0%, #1a7a5e 100%);
+            color: white;
+            position: relative;
+        }
+
+        .event-details::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,215,0,0.05) 35px, rgba(255,215,0,0.05) 70px);
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .event-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #ffd700;
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255,215,0,0.3);
+        }
+
+        .event-card h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+
+        .event-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        .invitation {
+            background: #f5f5dc;
+            text-align: center;
+        }
+
+        .invitation-text {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.3rem;
+            line-height: 2;
+            color: #333;
+        }
+
+        .quran-verse {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            border: 3px solid #ffd700;
+            box-shadow: 0 10px 30px rgba(10,77,60,0.15);
+        }
+
+        .quran-verse p {
+            font-style: italic;
+            color: #0a4d3c;
+            font-size: 1.3rem;
+        }
+
+        .invitation-names {
+            margin-top: 40px;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(10,77,60,0.15);
+            border: 2px solid #ffd700;
+        }
+
+        .location {
+            background: #fff;
+        }
+
+        .map-container {
+            margin-top: 50px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(10,77,60,0.2);
+            height: 500px;
+            border: 3px solid #ffd700;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .location-details {
+            margin-top: 30px;
+            text-align: center;
+            padding: 30px;
+            background: #f5f5dc;
+            border-radius: 15px;
+            border: 2px solid #ffd700;
+        }
+
+        .location-details h4 {
+            font-size: 1.8rem;
+            color: #0a4d3c;
+            margin-bottom: 15px;
+        }
+
+        .location-details p {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .floating-ornaments {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .ornament-float {
+            position: absolute;
+            font-size: 30px;
+            animation: floatOrnament 6s ease-in-out infinite;
+            opacity: 0;
+            color: #ffd700;
+        }
+
+        @keyframes floatOrnament {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            z-index: 10;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-20px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 30px;
+            height: 50px;
+            border: 2px solid #ffd700;
+            border-radius: 25px;
+            position: relative;
+        }
+
+        .scroll-indicator span::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: scroll 2s infinite;
+        }
+
+        @keyframes scroll {
+            0% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Audio Player -->
+    <audio id="bgMusic" loop preload="auto">
+        <!-- Ganti "song.mp3" dengan nama file musik Anda -->
+        <source src="Wedingnashed.mp3" type="audio/mpeg">
+        <!-- Alternatif format jika MP3 tidak support -->
+        <source src="song.ogg" type="audio/ogg">
+    </audio>
+
+    <div class="music-control" id="musicControl" onclick="toggleMusic()" title="Klik untuk play/pause musik">
+        <span id="musicIcon">🔇</span>
+    </div>
+
+    <div class="cover" id="cover">
+        <div class="islamic-pattern"></div>
+        <div class="cover-content">
+            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <h1>The Wedding Of</h1>
+            <div class="ornament">☪ ✦ ☪</div>
+            <p>Andi & Siti</p>
+            <button class="open-btn" onclick="openInvitation()">Buka Undangan</button>
+        </div>
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </div>
+
+    <div class="content" id="content">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+                <h2>Dengan Memohon Rahmat dan Ridho Allah SWT</h2>
+                <p>Kami Mengundang Bapak/Ibu/Saudara/i untuk Hadir di Acara Pernikahan Kami</p>
+                <div class="ornament">☪ ✦ ☪</div>
+                <div class="couple-names">Andi & Siti</div>
+                <div class="ornament">✦</div>
+                <div class="date">Sabtu, 15 Maret 2025</div>
+            </div>
+        </section>
+
+        <section class="bride-groom">
+            <div class="container">
+                <h2 class="section-title">Mengangkat Hajat Kedua Mempelai</h2>
+                <div class="couple-container">
+                    <div class="couple-card">
+                        <div class="couple-photo">👰</div>
+                        <h3>Siti Nurhaliza</h3>
+                        <div class="ornament" style="font-size: 1.5rem;">✦</div>
+                        <p><strong>Putri Pertama dari:</strong></p>
+                        <p>Bapak H. Ahmad Wijaya</p>
+                        <p>&</p>
+                        <p>Ibu Hj. Siti Maryam</p>
+                        <div class="ornament" style="font-size: 1.2rem; margin: 15px 0;">☪</div>
+                        <p style="margin-top: 20px;"><strong>Alamat:</strong></p>
+                        <p>Jl. Mawar No. 123<br>Jakarta Selatan</p>
+                    </div>
+                    <div class="couple-card">
+                        <div class="couple-photo">🤵</div>
+                        <h3>Andi Pratama</h3>
+                        <div class="ornament" style="font-size: 1.5rem;">✦</div>
+                        <p><strong>Putra Kedua dari:</strong></p>
+                        <p>Bapak H. Bambang Sutrisno</p>
+                        <p>&</p>
+                        <p>Ibu Hj. Ratna Dewi</p>
+                        <div class="ornament" style="font-size: 1.2rem; margin: 15px 0;">☪</div>
+                        <p style="margin-top: 20px;"><strong>Alamat:</strong></p>
+                        <p>Jl. Melati No. 45<br>Jakarta Timur</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="event-details">
+            <div class="container">
+                <h2 class="section-title" style="color: #ffd700;">Waktu & Tempat Acara</h2>
+                <div class="ornament" style="color: #ffd700;">☪ ✦ ☪</div>
+                <div class="event-grid">
+                    <div class="event-card">
+                        <h3>💍 Akad Nikah</h3>
+                        <div class="ornament" style="font-size: 1.5rem;">✦</div>
+                        <p><strong>Sabtu, 15 Maret 2025</strong></p>
+                        <p>Pukul: 08.00 - 10.00 WIB</p>
+                        <div class="ornament" style="font-size: 1.2rem; margin: 10px 0;">☪</div>
+                        <p><strong>Masjid Al-Ikhlas</strong></p>
+                        <p>Jl. Sudirman No. 789, Jakarta</p>
+                    </div>
+                    <div class="event-card">
+                        <h3>🎊 Resepsi</h3>
+                        <div class="ornament" style="font-size: 1.5rem;">✦</div>
+                        <p><strong>Sabtu, 15 Maret 2025</strong></p>
+                        <p>Pukul: 11.00 - 14.00 WIB</p>
+                        <div class="ornament" style="font-size: 1.2rem; margin: 10px 0;">☪</div>
+                        <p><strong>Gedung Balai Kartini</strong></p>
+                        <p>Jl. Gatot Subroto No. 456, Jakarta</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="invitation">
+            <div class="container">
+                <h2 class="section-title">Turut Mengundang</h2>
+                <div class="invitation-text">
+                    <div class="quran-verse">
+                        <p>"Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir"</p>
+                        <p style="margin-top: 15px;"><strong>(QS. Ar-Rum: 21)</strong></p>
+                    </div>
+                    
+                    <p style="margin-top: 30px;">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
+                    <p style="margin-top: 20px;">Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu kepada kedua mempelai dalam ikatan pernikahan yang Insya Allah akan diselenggarakan pada:</p>
+                    
+                    <div class="invitation-names">
+                        <div class="ornament" style="color: #0a4d3c;">☪ ✦ ☪</div>
+                        <p style="font-size: 1.1rem; margin: 20px 0;">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan do'a restu kepada kedua mempelai.</p>
+                        <div class="ornament" style="color: #ffd700; font-size: 2rem; margin: 20px 0;">✦</div>
+                        <p style="margin-top: 30px;"><strong>Atas kehadiran dan do'a restu dari Bapak/Ibu/Saudara/i, kami mengucapkan terima kasih.</strong></p>
+                        <p style="margin-top: 30px; font-size: 1.5rem; color: #0a4d3c;"><strong>وَالسَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ</strong></p>
+                        <p style="margin-top: 10px; font-size: 1.3rem;">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+                        <div class="ornament" style="color: #0a4d3c; margin: 20px 0;">☪</div>
+                        <p style="margin-top: 20px; font-size: 1.3rem;"><strong>Kami Yang Berbahagia,</strong></p>
+                        <p style="margin-top: 15px; font-size: 1.8rem; color: #0a4d3c;"><strong>Keluarga Besar Andi & Siti</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="location">
+            <div class="container">
+                <h2 class="section-title">Denah Lokasi</h2>
+                <div class="ornament" style="color: #0a4d3c;">☪ ✦ ☪</div>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.2887311150724!2d106.82493631476889!3d-6.225023395502046!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e34b9d%3A0x5371bf2cbc883c1!2sMonas%2C%20Jakarta!5e0!3m2!1sen!2sid!4v1234567890"
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+                <div class="location-details">
+                    <h4>📍 Gedung Balai Kartini</h4>
+                    <div class="ornament" style="color: #0a4d3c; font-size: 1.5rem;">✦</div>
+                    <p>Jl. Gatot Subroto No. 456, Jakarta Pusat 10270</p>
+                    <div class="ornament" style="color: #ffd700; font-size: 1.2rem; margin: 10px 0;">☪</div>
+                    <p style="margin-top: 15px;">Gedung ini mudah diakses dari berbagai arah dan memiliki area parkir yang luas</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="floating-ornaments" id="ornaments"></div>
+
+    <script>
+        let musicPlaying = false;
+        const bgMusic = document.getElementById('bgMusic');
+        const musicControl = document.getElementById('musicControl');
+        const musicIcon = document.getElementById('musicIcon');
+
+        // Set volume
+        bgMusic.volume = 0.5;
+
+        // Check if audio loaded successfully
+        bgMusic.addEventListener('canplay', () => {
+            console.log('✅ Audio berhasil dimuat dan siap diputar');
+        });
+
+        bgMusic.addEventListener('error', (e) => {
+            console.error('❌ Error loading audio. Pastikan file musik ada di folder yang sama dengan file HTML');
+            musicIcon.textContent = '❌';
+        });
+
+        function openInvitation() {
+            document.getElementById('cover').style.display = 'none';
+            document.getElementById('content').classList.add('active');
+            createOrnaments();
+            
+            // Auto play music when invitation opened
+            setTimeout(() => {
+                playMusic();
+            }, 300);
+        }
+
+        function playMusic() {
+            bgMusic.play().then(() => {
+                musicPlaying = true;
+                musicControl.classList.add('playing');
+                musicIcon.textContent = '🔊';
+                console.log('✅ Musik berhasil diputar otomatis');
+            }).catch(error => {
+                console.log('⚠️ Autoplay diblok browser. Klik tombol musik untuk memutar.');
+                musicIcon.textContent = '🔇';
+            });
+        }
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                bgMusic.pause();
+                musicPlaying = false;
+                musicControl.classList.remove('playing');
+                musicIcon.textContent = '🔇';
+                console.log('⏸️ Musik di-pause');
+            } else {
+                bgMusic.play().then(() => {
+                    musicPlaying = true;
+                    musicControl.classList.add('playing');
+                    musicIcon.textContent = '🔊';
+                    console.log('▶️ Musik diputar');
+                }).catch(error => {
+                    console.error('❌ Error saat memutar musik:', error);
+                    alert('Tidak dapat memutar musik. Pastikan file "song.mp3" ada di folder yang sama.');
+                });
+            }
+        }
+
+        function createOrnaments() {
+            const ornamentsContainer = document.getElementById('ornaments');
+            const ornamentSymbols = ['☪', '✦', '❋', '✿'];
+            
+            setInterval(() => {
+                const ornament = document.createElement('div');
+                ornament.classList.add('ornament-float');
+                ornament.innerHTML = ornamentSymbols[Math.floor(Math.random() * ornamentSymbols.length)];
+                ornament.style.left = Math.random() * 100 + '%';
+                ornament.style.animationDelay = Math.random() * 2 + 's';
+                ornament.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                ornamentsContainer.appendChild(ornament);
+
+                setTimeout(() => {
+                    ornament.remove();
+                }, 6000);
+            }, 400);
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.hero-content');
+            parallaxElements.forEach(el => {
+                const speed = 0.3;
+                el.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.couple-card, .event-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
